@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище bazadannihPPModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Igrokis">
+          <Key>
+            <PropertyRef Name="ID_Igroki" />
+          </Key>
+          <Property Name="ID_Igroki" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameIgroki" Type="varchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="KomandiTurniri">
+          <Key>
+            <PropertyRef Name="ID_KomandiTurniri" />
+          </Key>
+          <Property Name="ID_KomandiTurniri" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Team_ID" Type="int" Nullable="false" />
+          <Property Name="Igroki_ID" Type="int" Nullable="false" />
+          <Property Name="Turniri_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="ID_Team" />
+          </Key>
+          <Property Name="ID_Team" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamName" Type="varchar" MaxLength="50" />
+          <Property Name="Sponsor" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Turniris">
+          <Key>
+            <PropertyRef Name="ID_Turnir" />
+          </Key>
+          <Property Name="ID_Turnir" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TurnirName" Type="varchar" MaxLength="50" />
+          <Property Name="Janr" Type="varchar" MaxLength="50" />
+          <Property Name="Igra" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "bazadannihPP.dbo.InformationCyberSporta" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="InformationCyberSporta">
+          <Property Name="Команды" Type="varchar" MaxLength="50" />
+          <Property Name="Спонсоры" Type="varchar" MaxLength="50" />
+          <Property Name="Никнеймы" Type="varchar" MaxLength="50" />
+          <Property Name="Возраст" Type="int" />
+          <Property Name="Страны" Type="varchar" MaxLength="50" />
+          <Property Name="Турнир" Type="varchar" MaxLength="50" />
+          <Property Name="Жанр" Type="varchar" MaxLength="50" />
+          <Property Name="Игры" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <Association Name="FK__KomandiTu__Igrok__00200768">
+          <End Role="Igrokis" Type="Self.Igrokis" Multiplicity="1" />
+          <End Role="KomandiTurniri" Type="Self.KomandiTurniri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Igrokis">
+              <PropertyRef Name="ID_Igroki" />
+            </Principal>
+            <Dependent Role="KomandiTurniri">
+              <PropertyRef Name="Igroki_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KomandiTu__Team___7F2BE32F">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="KomandiTurniri" Type="Self.KomandiTurniri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID_Team" />
+            </Principal>
+            <Dependent Role="KomandiTurniri">
+              <PropertyRef Name="Team_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KomandiTu__Turni__01142BA1">
+          <End Role="Turniris" Type="Self.Turniris" Multiplicity="1" />
+          <End Role="KomandiTurniri" Type="Self.KomandiTurniri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turniris">
+              <PropertyRef Name="ID_Turnir" />
+            </Principal>
+            <Dependent Role="KomandiTurniri">
+              <PropertyRef Name="Turniri_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище bazadannihPPModelContainer">
+          <EntitySet Name="Igrokis" EntityType="Self.Igrokis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KomandiTurniri" EntityType="Self.KomandiTurniri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Turniris" EntityType="Self.Turniris" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__KomandiTu__Igrok__00200768" Association="Self.FK__KomandiTu__Igrok__00200768">
+            <End Role="Igrokis" EntitySet="Igrokis" />
+            <End Role="KomandiTurniri" EntitySet="KomandiTurniri" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KomandiTu__Team___7F2BE32F" Association="Self.FK__KomandiTu__Team___7F2BE32F">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="KomandiTurniri" EntitySet="KomandiTurniri" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KomandiTu__Turni__01142BA1" Association="Self.FK__KomandiTu__Turni__01142BA1">
+            <End Role="Turniris" EntitySet="Turniris" />
+            <End Role="KomandiTurniri" EntitySet="KomandiTurniri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bazadannihPPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Igrokis">
+          <Key>
+            <PropertyRef Name="ID_Igroki" />
+          </Key>
+          <Property Name="ID_Igroki" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameIgroki" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KomandiTurniri" Relationship="Self.FK__KomandiTu__Igrok__619B8048" FromRole="Igrokis" ToRole="KomandiTurniri" />
+        </EntityType>
+        <EntityType Name="KomandiTurniri">
+          <Key>
+            <PropertyRef Name="ID_KomandiTurniri" />
+          </Key>
+          <Property Name="ID_KomandiTurniri" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Team_ID" Type="Int32" Nullable="false" />
+          <Property Name="Igroki_ID" Type="Int32" Nullable="false" />
+          <Property Name="Turniri_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Igrokis" Relationship="Self.FK__KomandiTu__Igrok__619B8048" FromRole="KomandiTurniri" ToRole="Igrokis" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK__KomandiTu__Team___60A75C0F" FromRole="KomandiTurniri" ToRole="Teams" />
+          <NavigationProperty Name="Turniris" Relationship="Self.FK__KomandiTu__Turni__628FA481" FromRole="KomandiTurniri" ToRole="Turniris" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="ID_Team" />
+          </Key>
+          <Property Name="ID_Team" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sponsor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KomandiTurniri" Relationship="Self.FK__KomandiTu__Team___60A75C0F" FromRole="Teams" ToRole="KomandiTurniri" />
+        </EntityType>
+        <EntityType Name="Turniris">
+          <Key>
+            <PropertyRef Name="ID_Turnir" />
+          </Key>
+          <Property Name="ID_Turnir" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TurnirName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Janr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Igra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KomandiTurniri" Relationship="Self.FK__KomandiTu__Turni__628FA481" FromRole="Turniris" ToRole="KomandiTurniri" />
+        </EntityType>
+        <Association Name="FK__KomandiTu__Igrok__619B8048">
+          <End Role="Igrokis" Type="Self.Igrokis" Multiplicity="1" />
+          <End Role="KomandiTurniri" Type="Self.KomandiTurniri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Igrokis">
+              <PropertyRef Name="ID_Igroki" />
+            </Principal>
+            <Dependent Role="KomandiTurniri">
+              <PropertyRef Name="Igroki_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KomandiTu__Team___60A75C0F">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="KomandiTurniri" Type="Self.KomandiTurniri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID_Team" />
+            </Principal>
+            <Dependent Role="KomandiTurniri">
+              <PropertyRef Name="Team_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KomandiTu__Turni__628FA481">
+          <End Role="Turniris" Type="Self.Turniris" Multiplicity="1" />
+          <End Role="KomandiTurniri" Type="Self.KomandiTurniri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turniris">
+              <PropertyRef Name="ID_Turnir" />
+            </Principal>
+            <Dependent Role="KomandiTurniri">
+              <PropertyRef Name="Turniri_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bazadannihPPEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Igrokis" EntityType="Self.Igrokis" />
+          <EntitySet Name="KomandiTurniri" EntityType="Self.KomandiTurniri" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" />
+          <EntitySet Name="Turniris" EntityType="Self.Turniris" />
+          <AssociationSet Name="FK__KomandiTu__Igrok__619B8048" Association="Self.FK__KomandiTu__Igrok__619B8048">
+            <End Role="Igrokis" EntitySet="Igrokis" />
+            <End Role="KomandiTurniri" EntitySet="KomandiTurniri" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KomandiTu__Team___60A75C0F" Association="Self.FK__KomandiTu__Team___60A75C0F">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="KomandiTurniri" EntitySet="KomandiTurniri" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KomandiTu__Turni__628FA481" Association="Self.FK__KomandiTu__Turni__628FA481">
+            <End Role="Turniris" EntitySet="Turniris" />
+            <End Role="KomandiTurniri" EntitySet="KomandiTurniri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище bazadannihPPModelContainer" CdmEntityContainer="bazadannihPPEntities2">
+          <EntitySetMapping Name="Igrokis">
+            <EntityTypeMapping TypeName="bazadannihPPModel.Igrokis">
+              <MappingFragment StoreEntitySet="Igrokis">
+                <ScalarProperty Name="ID_Igroki" ColumnName="ID_Igroki" />
+                <ScalarProperty Name="NameIgroki" ColumnName="NameIgroki" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KomandiTurniri">
+            <EntityTypeMapping TypeName="bazadannihPPModel.KomandiTurniri">
+              <MappingFragment StoreEntitySet="KomandiTurniri">
+                <ScalarProperty Name="ID_KomandiTurniri" ColumnName="ID_KomandiTurniri" />
+                <ScalarProperty Name="Team_ID" ColumnName="Team_ID" />
+                <ScalarProperty Name="Igroki_ID" ColumnName="Igroki_ID" />
+                <ScalarProperty Name="Turniri_ID" ColumnName="Turniri_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="bazadannihPPModel.Teams">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="ID_Team" ColumnName="ID_Team" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="Sponsor" ColumnName="Sponsor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turniris">
+            <EntityTypeMapping TypeName="bazadannihPPModel.Turniris">
+              <MappingFragment StoreEntitySet="Turniris">
+                <ScalarProperty Name="ID_Turnir" ColumnName="ID_Turnir" />
+                <ScalarProperty Name="TurnirName" ColumnName="TurnirName" />
+                <ScalarProperty Name="Janr" ColumnName="Janr" />
+                <ScalarProperty Name="Igra" ColumnName="Igra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
